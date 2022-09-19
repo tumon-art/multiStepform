@@ -1,6 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap");
 html,
 body {
+  --font: "Lato", sans-serif;
   --background: #0f0f16;
+  --h1-back: linear-gradient(90deg, #25c0f9 0%, #05b6a7 100%);
 
   padding: 0;
   margin: 0;
