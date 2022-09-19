@@ -3,7 +3,13 @@ import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import { Formik, Form, Field } from "formik";
 
+interface MyFormValues {
+  fullName: string;
+}
+
 const Home: NextPage = () => {
+  const initialValues: MyFormValues = { fullName: "" };
+
   return (
     <div>
       <Head>
@@ -13,6 +19,19 @@ const Home: NextPage = () => {
 
         <main className={styles.main}>
           <h1 className={styles.h1}> Fill The Form </h1>
+
+          <Formik initialValues={initialValues} submit={() => {}}>
+            <Form className={styles.form}>
+              <label htmlFor="fullName">Full Name</label>
+
+              <Field
+                className={styles.field}
+                id="fullName"
+                name="fullName"
+                placeholder="fullName"
+              />
+            </Form>
+          </Formik>
         </main>
       </Head>
     </div>
