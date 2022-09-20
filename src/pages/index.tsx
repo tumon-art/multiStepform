@@ -53,20 +53,20 @@ interface Prop extends FormikConfig<FormikValues> {
 export function FormikStepper({ children, ...props }: Prop) {
   const [step, setStep] = useState(0);
   const childrenArray = React.Children.toArray(children);
-  console.log(childrenArray);
   const currentChild = childrenArray[step];
 
   const stepDec = () => {
-    setStep((p) => p - 1);
+    if (step > 0) setStep((p) => p - 1);
   };
   const stepInc = () => {
-    setStep((p) => p + 1);
+    if (step < childrenArray.length - 1) setStep((p) => p + 1);
   };
   return (
     <Formik {...props}>
-      <Form autoComplete="off" className={styles.form}>
-        {currentChild}
-
+      <>
+        <Form autoComplete="off" className={styles.form}>
+          {currentChild}
+        </Form>
         <div className={styles.btnHold}>
           <button type="button" onClick={stepDec}>
             Back
@@ -75,7 +75,7 @@ export function FormikStepper({ children, ...props }: Prop) {
             Next
           </button>
         </div>
-      </Form>
+      </>
     </Formik>
   );
 }
