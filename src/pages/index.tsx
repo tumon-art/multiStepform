@@ -3,6 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import { Formik, Form, Field, FormikConfig, FormikValues } from "formik";
 import { object } from "yup";
+import React from "react";
 
 interface MyFormValues {
   name: string;
@@ -26,15 +27,18 @@ const Home: NextPage = () => {
         <FormikStepper
           validationSchema={object}
           initialValues={initialValues}
-          submit={() => {}}
+          onSubmit={() => {}}
         >
           <Form autoComplete="off" className={styles.form}>
-            <label htmlFor="name">Name</label>
+            <div>
+              <label htmlFor="name">Name</label>
+              <Field id="name" name="name" placeholder="name" />
+            </div>
 
-            <Field id="name" name="name" placeholder="name" />
-
-            <label htmlFor="email">Email</label>
-            <Field id="email" name="email" placeholder="email" />
+            <div>
+              <label htmlFor="email">Email</label>
+              <Field id="email" name="email" placeholder="email" />
+            </div>
           </Form>
         </FormikStepper>
       </main>
@@ -44,10 +48,13 @@ const Home: NextPage = () => {
 
 export default Home;
 
-export function FormikStepper({
-  children,
-  ...props
-}: FormikConfig<FormikValues>) {
+interface Prop extends FormikConfig<FormikValues> {
+  children: React.ReactNode;
+}
+
+export function FormikStepper({ children, ...props }: Prop) {
+  const childrenArray = React.Children.toArray(children);
+  console.log(childrenArray);
   return (
     <Formik {...props}>
       <Form autoComplete="off" className={styles.form}>
