@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
-import { Formik, Form, Field, FormikConfig, FormikValues } from "formik";
-import { object } from "yup";
+import { Field, ErrorMessage } from "formik";
+import * as yup from "yup";
 import React, { useState } from "react";
 import { FormikStepper } from "../components/FormikStepper";
 
@@ -31,16 +31,23 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.h1}> Fill The Form </h1>
-
         <FormikStepper
-          validationSchema={object}
+          validationSchema={yup.object({
+            name: yup.string().required("Name is required"),
+            // email: yup.string().email().required(),
+          })}
           initialValues={initialValues}
-          onSubmit={() => {}}
+          onSubmit={(values, actions) => {
+            console.log({ values, actions });
+            alert(JSON.stringify(values, null, 2));
+            actions.setSubmitting(false);
+          }}
         >
           <div className={styles.inputHold}>
             <span>
               <label htmlFor="name">Name</label>
               <Field id="name" name="name" placeholder="name" />
+              <ErrorMessage component="mark" name="name" />
             </span>
             <span>
               <label htmlFor="email">Email</label>

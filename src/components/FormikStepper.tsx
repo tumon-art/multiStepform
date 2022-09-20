@@ -1,5 +1,4 @@
-import { Formik, Form, Field, FormikConfig, FormikValues } from "formik";
-import { object } from "yup";
+import { Formik, Form, FormikConfig, FormikValues } from "formik";
 import React, { useState } from "react";
 import styles from "./FormikStepper.module.scss";
 
@@ -19,19 +18,16 @@ export function FormikStepper({ children, ...props }: Prop) {
   const stepDec = () => {
     if (step > 0) setStep((p) => p - 1);
   };
-  const stepInc = () => {
-    if (step < childrenArray.length - 1) setStep((p) => p + 1);
-  };
+
   return (
     <Formik
       {...props}
       onSubmit={(values, helpers) => {
+        console.log(values, helpers);
+
         if (isLastStep()) {
-          console.log("if");
           props.onSubmit(values, helpers);
         } else {
-          console.log("else");
-
           setStep((p) => p + 1);
         }
       }}
