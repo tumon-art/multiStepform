@@ -3,7 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import { Formik, Form, Field, FormikConfig, FormikValues } from "formik";
 import { object } from "yup";
-import React from "react";
+import React, { useState } from "react";
 
 interface MyFormValues {
   name: string;
@@ -29,17 +29,15 @@ const Home: NextPage = () => {
           initialValues={initialValues}
           onSubmit={() => {}}
         >
-          <Form autoComplete="off" className={styles.form}>
-            <div>
-              <label htmlFor="name">Name</label>
-              <Field id="name" name="name" placeholder="name" />
-            </div>
+          <div>
+            <label htmlFor="name">Name</label>
+            <Field id="name" name="name" placeholder="name" />
+          </div>
 
-            <div>
-              <label htmlFor="email">Email</label>
-              <Field id="email" name="email" placeholder="email" />
-            </div>
-          </Form>
+          <div>
+            <label htmlFor="email">Email</label>
+            <Field id="email" name="email" placeholder="email" />
+          </div>
         </FormikStepper>
       </main>
     </div>
@@ -53,12 +51,30 @@ interface Prop extends FormikConfig<FormikValues> {
 }
 
 export function FormikStepper({ children, ...props }: Prop) {
+  const [step, setStep] = useState(0);
   const childrenArray = React.Children.toArray(children);
   console.log(childrenArray);
+  const currentChild = childrenArray[step];
+
+  const stepDec = () => {
+    setStep((p) => p - 1);
+  };
+  const stepInc = () => {
+    setStep((p) => p + 1);
+  };
   return (
     <Formik {...props}>
       <Form autoComplete="off" className={styles.form}>
-        {children}
+        {currentChild}
+
+        <div className={styles.btnHold}>
+          <button type="button" onClick={stepDec}>
+            Back
+          </button>
+          <button type="button" onClick={stepInc}>
+            Next
+          </button>
+        </div>
       </Form>
     </Formik>
   );
