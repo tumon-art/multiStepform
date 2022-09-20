@@ -4,14 +4,22 @@ import styles from "../styles/Home.module.scss";
 import { Formik, Form, Field, FormikConfig, FormikValues } from "formik";
 import { object } from "yup";
 import React, { useState } from "react";
+import { FormikStepper } from "../components/FormikStepper";
 
 interface MyFormValues {
   name: string;
   email: string;
+  phone: number;
+  city: string;
 }
 
 const Home: NextPage = () => {
-  const initialValues: MyFormValues = { name: "", email: "" };
+  const initialValues: MyFormValues = {
+    name: "",
+    email: "",
+    phone: 0,
+    city: "",
+  };
 
   return (
     <div>
@@ -29,14 +37,31 @@ const Home: NextPage = () => {
           initialValues={initialValues}
           onSubmit={() => {}}
         >
-          <div>
-            <label htmlFor="name">Name</label>
-            <Field id="name" name="name" placeholder="name" />
+          <div className={styles.inputHold}>
+            <span>
+              <label htmlFor="name">Name</label>
+              <Field id="name" name="name" placeholder="name" />
+            </span>
+            <span>
+              <label htmlFor="email">Email</label>
+              <Field id="email" name="email" placeholder="email" />
+            </span>
           </div>
 
-          <div>
-            <label htmlFor="email">Email</label>
-            <Field id="email" name="email" placeholder="email" />
+          <div className={styles.inputHold}>
+            <span>
+              <label htmlFor="phone">Phone</label>
+              <Field
+                id="phone"
+                name="phone"
+                type="number"
+                placeholder="number"
+              />
+            </span>
+            <span>
+              <label htmlFor="city">City</label>
+              <Field id="city" name="city" placeholder="city" />
+            </span>
           </div>
         </FormikStepper>
       </main>
@@ -45,37 +70,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-interface Prop extends FormikConfig<FormikValues> {
-  children: React.ReactNode;
-}
-
-export function FormikStepper({ children, ...props }: Prop) {
-  const [step, setStep] = useState(0);
-  const childrenArray = React.Children.toArray(children);
-  const currentChild = childrenArray[step];
-
-  const stepDec = () => {
-    if (step > 0) setStep((p) => p - 1);
-  };
-  const stepInc = () => {
-    if (step < childrenArray.length - 1) setStep((p) => p + 1);
-  };
-  return (
-    <Formik {...props}>
-      <>
-        <Form autoComplete="off" className={styles.form}>
-          {currentChild}
-        </Form>
-        <div className={styles.btnHold}>
-          <button type="button" onClick={stepDec}>
-            Back
-          </button>
-          <button type="button" onClick={stepInc}>
-            Next
-          </button>
-        </div>
-      </>
-    </Formik>
-  );
-}
