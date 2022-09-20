@@ -18,26 +18,26 @@ const Home: NextPage = () => {
         <title>React Form</title>
         <meta name="description" content=" A Multi Step Form" />
         <link rel="icon" href="/favicon.ico" />
-
-        <main className={styles.main}>
-          <h1 className={styles.h1}> Fill The Form </h1>
-
-          <FormikStepper
-            validationSchema={object}
-            initialValues={initialValues}
-            submit={() => {}}
-          >
-            <Form autoComplete="off" className={styles.form}>
-              <label htmlFor="name">Name</label>
-
-              <Field id="name" name="name" placeholder="name" />
-
-              <label htmlFor="email">Email</label>
-              <Field id="email" name="email" placeholder="email" />
-            </Form>
-          </FormikStepper>
-        </main>
       </Head>
+
+      <main className={styles.main}>
+        <h1 className={styles.h1}> Fill The Form </h1>
+
+        <FormikStepper
+          validationSchema={object}
+          initialValues={initialValues}
+          submit={() => {}}
+        >
+          <Form autoComplete="off" className={styles.form}>
+            <label htmlFor="name">Name</label>
+
+            <Field id="name" name="name" placeholder="name" />
+
+            <label htmlFor="email">Email</label>
+            <Field id="email" name="email" placeholder="email" />
+          </Form>
+        </FormikStepper>
+      </main>
     </div>
   );
 };
