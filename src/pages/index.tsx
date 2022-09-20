@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, FormikConfig, FormikValues } from "formik";
 import { object } from "yup";
 
 interface MyFormValues {
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
         <main className={styles.main}>
           <h1 className={styles.h1}> Fill The Form </h1>
 
-          <Formik
+          <FormikStepper
             validationSchema={object}
             initialValues={initialValues}
             submit={() => {}}
@@ -30,22 +30,12 @@ const Home: NextPage = () => {
             <Form autoComplete="off" className={styles.form}>
               <label htmlFor="name">Name</label>
 
-              <Field
-                /* className={styles.field} */
-                id="name"
-                name="name"
-                placeholder="name"
-              />
+              <Field id="name" name="name" placeholder="name" />
 
               <label htmlFor="email">Email</label>
-              <Field
-                /* className={styles.field} */
-                id="email"
-                name="email"
-                placeholder="email"
-              />
+              <Field id="email" name="email" placeholder="email" />
             </Form>
-          </Formik>
+          </FormikStepper>
         </main>
       </Head>
     </div>
@@ -53,3 +43,16 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export function FormikStepper({
+  children,
+  ...props
+}: FormikConfig<FormikValues>) {
+  return (
+    <Formik {...props}>
+      <Form autoComplete="off" className={styles.form}>
+        {children}
+      </Form>
+    </Formik>
+  );
+}
