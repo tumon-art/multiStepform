@@ -4,11 +4,12 @@ import styles from "../styles/Home.module.scss";
 import { Formik, Form, Field } from "formik";
 
 interface MyFormValues {
-  fullName: string;
+  name: string;
+  email: string;
 }
 
 const Home: NextPage = () => {
-  const initialValues: MyFormValues = { fullName: "" };
+  const initialValues: MyFormValues = { name: "", email: "" };
 
   return (
     <div>
@@ -22,13 +23,21 @@ const Home: NextPage = () => {
 
           <Formik initialValues={initialValues} submit={() => {}}>
             <Form className={styles.form}>
-              <label htmlFor="fullName">Full Name</label>
+              <label htmlFor="name">Name</label>
 
               <Field
-                className={styles.field}
-                id="fullName"
-                name="fullName"
-                placeholder="fullName"
+                /* className={styles.field} */
+                id="name"
+                name="name"
+                placeholder="name"
+              />
+
+              <label htmlFor="email">Email</label>
+              <Field
+                /* className={styles.field} */
+                id="email"
+                name="email"
+                placeholder="email"
               />
             </Form>
           </Formik>
