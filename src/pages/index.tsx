@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import { Formik, Form, Field } from "formik";
+import { object } from "yup";
 
 interface MyFormValues {
   name: string;
@@ -21,8 +22,12 @@ const Home: NextPage = () => {
         <main className={styles.main}>
           <h1 className={styles.h1}> Fill The Form </h1>
 
-          <Formik initialValues={initialValues} submit={() => {}}>
-            <Form className={styles.form}>
+          <Formik
+            validationSchema={object}
+            initialValues={initialValues}
+            submit={() => {}}
+          >
+            <Form autoComplete="off" className={styles.form}>
               <label htmlFor="name">Name</label>
 
               <Field
