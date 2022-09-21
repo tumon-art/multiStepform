@@ -8,12 +8,26 @@ interface Prop extends FormikConfig<FormikValues> {
   children: React.ReactNode;
 }
 
+interface FormikStepProps
+  extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {}
+
+// === Formik Step
+export function FromikStep({ children }: FormikStepProps) {
+  return <> {children} </>;
+}
+
+// === Formik Steper
 export function FormikStepper({ children, ...props }: Prop) {
   const { step, setStep } = useStore();
 
-  const childrenArray = React.Children.toArray(children);
-  const currentChild = childrenArray[step];
+  const childrenArray = React.Children.toArray(
+    children
+  ) as React.ReactElement<FormikStepProps>[];
+  const currentChild = childrenArray[
+    step
+  ] as React.ReactElement<FormikStepProps>;
 
+  console.log(currentChild);
   const isLastStep = () => {
     return step === childrenArray.length - 1;
   };
@@ -26,6 +40,7 @@ export function FormikStepper({ children, ...props }: Prop) {
     <>
       <ProgressBar childrenArray={childrenArray} />
       <Formik
+        validationSchema={currentChild.props.validationSchema}
         {...props}
         onSubmit={(values, helpers) => {
           if (isLastStep()) {

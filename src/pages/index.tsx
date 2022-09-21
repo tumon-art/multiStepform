@@ -4,7 +4,7 @@ import styles from "../styles/Home.module.scss";
 import { Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import React from "react";
-import { FormikStepper } from "../components/FormikStepper";
+import { FormikStepper, FromikStep } from "../components/FormikStepper";
 import useStore from "../store/mainStore";
 
 interface MyFormValues {
@@ -84,59 +84,74 @@ const Home: NextPage = () => {
         <h1 className={styles.h1}> Fill The Form </h1>
 
         <FormikStepper
-          validationSchema={yup.object({
-            // name: yup.string().required("Name is required"),
-            // email: yup.string().email().required(),
-            // country: yup.string().required("Enter Your Country"),
-            // zip: yup.string().required("Enter Your Zip Code"),
-          })}
           initialValues={initialValues}
-          onSubmit={(values, actions) => {
+          onSubmit={(values, helpers) => {
             alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
+            helpers.setSubmitting(false);
           }}
         >
-          <div className={styles.inputHold}>
-            <span>
-              <label htmlFor="name">Name</label>
-              <Field id="name" name="name" placeholder="name" />
-              <ErrorMessage component="mark" name="name" />
-            </span>
-            <span>
-              <label htmlFor="email">Email</label>
-              <Field id="email" name="email" placeholder="email" />
-              <ErrorMessage component="mark" name="email" />
-            </span>
-          </div>
+          <FromikStep
+            validationSchema={yup.object({
+              name: yup.string().required("Name is required"),
+              email: yup.string().email().required(),
+            })}
+          >
+            <div className={styles.inputHold}>
+              <span>
+                <label htmlFor="name">Name</label>
+                <Field id="name" name="name" placeholder="name" />
+                <ErrorMessage component="mark" name="name" />
+              </span>
+              <span>
+                <label htmlFor="email">Email</label>
+                <Field id="email" name="email" placeholder="email" />
+                <ErrorMessage component="mark" name="email" />
+              </span>
+            </div>
+          </FromikStep>
 
-          <div className={styles.inputHold}>
-            <span>
-              <label htmlFor="phone">Phone</label>
-              <Field
-                id="phone"
-                name="phone"
-                type="number"
-                placeholder="number"
-              />
-            </span>
-            <span>
-              <label htmlFor="city">City</label>
-              <Field id="city" name="city" placeholder="city" />
-              <ErrorMessage component="mark" name="city" />
-            </span>
-          </div>
+          <FromikStep
+            validationSchema={yup.object({
+              city: yup.string().required("Enter Your City"),
+            })}
+          >
+            <div className={styles.inputHold}>
+              <span>
+                <label htmlFor="phone">Phone</label>
+                <Field
+                  id="phone"
+                  name="phone"
+                  type="number"
+                  placeholder="number"
+                />
+              </span>
+              <span>
+                <label htmlFor="city">City</label>
+                <Field id="city" name="city" placeholder="city" />
+                <ErrorMessage component="mark" name="city" />
+              </span>
+            </div>
+          </FromikStep>
 
-          <div className={styles.inputHold}>
-            <span>
-              <label htmlFor="country">Country</label>
-              <Field id="country" name="country" placeholder="country" />
-              <ErrorMessage component="mark" name="country" />
-            </span>
-            <span>
-              <label htmlFor="zip">Zip</label>
-              <Field id="zip" name="zip" placeholder="zip" />
-            </span>
-          </div>
+          <FromikStep
+            validationSchema={yup.object({
+              country: yup.string().required("Enter Your Country"),
+              zip: yup.string().required("Enter Your Zip Code"),
+            })}
+          >
+            <div className={styles.inputHold}>
+              <span>
+                <label htmlFor="country">Country</label>
+                <Field id="country" name="country" placeholder="country" />
+                <ErrorMessage component="mark" name="country" />
+              </span>
+              <span>
+                <label htmlFor="zip">Zip</label>
+                <Field id="zip" name="zip" placeholder="zip" />
+                <ErrorMessage component="mark" name="zip" />
+              </span>
+            </div>
+          </FromikStep>
         </FormikStepper>
       </main>
     </div>
