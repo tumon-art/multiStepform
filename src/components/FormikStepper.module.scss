@@ -1,13 +1,19 @@
+@use ".././styles/screen";
+
 .btnHold {
   display: flex;
   width: 100%;
   justify-content: center;
-  gap: 7em;
+  gap: 2em;
   margin: 5em 0;
 
+  @include screen.devices(sm) {
+    gap: 7em;
+  }
+
   button {
-    background: var(--input-back);
-    border: 2px solid var(--input-border);
+    background: var(--button-back);
+    border: none;
     padding: 0.2em 1.7em;
     border-radius: 10px;
     font-style: normal;
@@ -15,10 +21,8 @@
     font-size: 20px;
     line-height: 24px;
     transition: scale var(--transition-btn);
-
-    color: var(--button-color);
+    color: var(--round-text);
     cursor: pointer;
-
     &:hover {
       scale: 1.1;
     }

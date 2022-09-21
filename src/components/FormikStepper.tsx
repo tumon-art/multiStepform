@@ -1,13 +1,16 @@
 import { Formik, Form, FormikConfig, FormikValues } from "formik";
-import React, { useState } from "react";
+import React from "react";
+import useStore from "../store/mainStore";
 import styles from "./FormikStepper.module.scss";
+import ProgressBar from "./ProgressBar";
 
 interface Prop extends FormikConfig<FormikValues> {
   children: React.ReactNode;
 }
 
 export function FormikStepper({ children, ...props }: Prop) {
-  const [step, setStep] = useState(0);
+  const { step, setStep } = useStore();
+
   const childrenArray = React.Children.toArray(children);
   const currentChild = childrenArray[step];
 
@@ -16,31 +19,32 @@ export function FormikStepper({ children, ...props }: Prop) {
   };
 
   const stepDec = () => {
-    if (step > 0) setStep((p) => p - 1);
+    if (step > 0) setStep(step - 1);
   };
 
   return (
-    <Formik
-      {...props}
-      onSubmit={(values, helpers) => {
-        console.log(values, helpers);
-
-        if (isLastStep()) {
-          props.onSubmit(values, helpers);
-        } else {
-          setStep((p) => p + 1);
-        }
-      }}
-    >
-      <Form autoComplete="off" className={styles.form}>
-        {currentChild}
-        <div className={styles.btnHold}>
-          <button type="button" onClick={stepDec}>
-            Back
-          </button>
-          <button type="submit"> {isLastStep() ? "Save" : "Next"}</button>
-        </div>
-      </Form>
-    </Formik>
+    <>
+      <ProgressBar childrenArray={childrenArray} />
+      <Formik
+        {...props}
+        onSubmit={(values, helpers) => {
+          if (isLastStep()) {
+            props.onSubmit(values, helpers);
+          } else {
+            setStep(step + 1);
+          }
+        }}
+      >
+        <Form autoComplete="off" className={styles.form}>
+          {currentChild}
+          <div className={styles.btnHold}>
+            <button type="button" onClick={stepDec}>
+              Back
+            </button>
+            <button type="submit"> {isLastStep() ? "Save" : "Next"}</button>
+          </div>
+        </Form>
+      </Formik>
+    </>
   );
 }
