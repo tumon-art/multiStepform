@@ -27,7 +27,6 @@ export function FormikStepper({ children, ...props }: Prop) {
     step
   ] as React.ReactElement<FormikStepProps>;
 
-  console.log(currentChild);
   const isLastStep = () => {
     return step === childrenArray.length - 1;
   };

@@ -6,6 +6,7 @@ import * as yup from "yup";
 import React from "react";
 import { FormikStepper, FromikStep } from "../components/FormikStepper";
 import useStore from "../store/mainStore";
+import toast from "react-hot-toast";
 
 interface MyFormValues {
   name: string;
@@ -17,7 +18,7 @@ interface MyFormValues {
 }
 
 const Home: NextPage = () => {
-  const { darkMode, setDarkMode } = useStore();
+  const { setStep, darkMode, setDarkMode } = useStore();
   const initialValues: MyFormValues = {
     name: "",
     email: "",
@@ -86,8 +87,18 @@ const Home: NextPage = () => {
         <FormikStepper
           initialValues={initialValues}
           onSubmit={(values, helpers) => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
             helpers.setSubmitting(false);
+            helpers.resetForm();
+            setStep(0);
+            toast(JSON.stringify(values, null, 2), {
+              style: {
+                borderRadius: "10px",
+                border: "4px solid skyblue",
+                background: "#333",
+                color: "#fff",
+              },
+            });
           }}
         >
           <FromikStep
