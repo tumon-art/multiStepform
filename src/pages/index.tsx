@@ -6,7 +6,6 @@ import * as yup from "yup";
 import React from "react";
 import { FormikStepper, FromikStep } from "../components/FormikStepper";
 import useStore from "../store/mainStore";
-import toast from "react-hot-toast";
 
 interface MyFormValues {
   name: string;
@@ -90,14 +89,7 @@ const Home: NextPage = () => {
             helpers.setSubmitting(false);
             helpers.resetForm();
             setStep(0);
-            toast(JSON.stringify(values, null, 2), {
-              style: {
-                borderRadius: "10px",
-                border: "4px solid skyblue",
-                background: "#333",
-                color: "#fff",
-              },
-            });
+            alert(JSON.stringify(values, null, 2));
           }}
         >
           <FromikStep
