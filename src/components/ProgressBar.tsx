@@ -1,11 +1,8 @@
-import { useEffect, useRef } from "react";
 import useStore from "../store/mainStore";
 import styles from "./ProgressBar.module.scss";
 
 const ProgressBar = ({ childrenArray }: any) => {
   const { step } = useStore();
-
-  const roundHold = useRef<HTMLDivElement>(null);
 
   const css = () => {
     if (step == 0) {
@@ -28,7 +25,6 @@ const ProgressBar = ({ childrenArray }: any) => {
         {childrenArray.map((e: [], i: any) => {
           return (
             <div
-              ref={roundHold}
               key={i}
               className={`${step >= i ? styles.round__color : styles.round}`}
             >

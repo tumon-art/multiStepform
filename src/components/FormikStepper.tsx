@@ -23,6 +23,7 @@ export function FormikStepper({ children, ...props }: Prop) {
   const childrenArray = React.Children.toArray(
     children
   ) as React.ReactElement<FormikStepProps>[];
+
   const currentChild = childrenArray[
     step
   ] as React.ReactElement<FormikStepProps>;

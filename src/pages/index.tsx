@@ -87,7 +87,6 @@ const Home: NextPage = () => {
         <FormikStepper
           initialValues={initialValues}
           onSubmit={(values, helpers) => {
-            // alert(JSON.stringify(values, null, 2));
             helpers.setSubmitting(false);
             helpers.resetForm();
             setStep(0);
