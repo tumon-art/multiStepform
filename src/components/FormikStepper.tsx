@@ -3,6 +3,7 @@ import React from "react";
 import useStore from "../store/mainStore";
 import styles from "./FormikStepper.module.scss";
 import ProgressBar from "./ProgressBar";
+import emailjs from "@emailjs/browser";
 
 interface Prop extends FormikConfig<FormikValues> {
   children: React.ReactNode;
@@ -36,6 +37,34 @@ export function FormikStepper({ children, ...props }: Prop) {
     if (step > 0) setStep(step - 1);
   };
 
+  const sendEmail = (e: any) => {
+
+    emailjs
+      .send(
+        "service_7wis4fb",
+        "template_y23h5qu",
+        {
+          from_name: "tumonkhn@gmail.com",
+          to_name: "mofakhar0@gmail.com",
+          reply_to: "tumonkhn@gmail.com",
+          message_html: "I got nothibg",
+        },
+        "Ol-y_QPU3KoH7CeMf"
+      )
+      .then(
+        function (response) {
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        function (error) {
+          console.log("FAILED...", error);
+        }
+      );
+  };
+
+
+setTimeout(() => {
+  sendEmail('nothing')
+}, 1000);
   return (
     <>
       <ProgressBar childrenArray={childrenArray} />

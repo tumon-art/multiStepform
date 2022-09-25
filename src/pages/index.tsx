@@ -3,9 +3,10 @@ import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import { Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import React from "react";
+import React, { useRef } from "react";
 import { FormikStepper, FromikStep } from "../components/FormikStepper";
 import useStore from "../store/mainStore";
+
 
 interface MyFormValues {
   name: string;
@@ -17,6 +18,7 @@ interface MyFormValues {
 }
 
 const Home: NextPage = () => {
+  
   const { setStep, darkMode, setDarkMode } = useStore();
   const initialValues: MyFormValues = {
     name: "",
@@ -26,6 +28,9 @@ const Home: NextPage = () => {
     country: "",
     zip: "",
   };
+
+  const form = useRef<HTMLFormElement>();
+
 
   const themeToggle = () => {
     const body = document.getElementsByTagName("BODY")[0] as HTMLElement;
@@ -86,6 +91,7 @@ const Home: NextPage = () => {
         <FormikStepper
           initialValues={initialValues}
           onSubmit={(values, helpers) => {
+            sendEmail()
             helpers.setSubmitting(false);
             helpers.resetForm();
             setStep(0);
